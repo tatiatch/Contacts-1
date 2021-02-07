@@ -1,35 +1,17 @@
+import firebase from './firebaseConfig';
+
+const database = firebase.database();
+
 export function getContacts() {
   const contacts = JSON.parse(localStorage.getItem('contacts')) || []
   return contacts
 }
 
 export function removeContact(id) {
-  const contacts = getContacts().filter((contact) => contact.id !== id)
-  localStorage.setItem('contacts', JSON.stringify(contacts))
-  return contacts
+  database.ref('contacts/' + id).remove()
 }
 
 export function addContact(contact) {
-  const contacts = getContacts()
-  const exist = contacts.find((x) => x.id == contact.id)
-  let arr = []
-  if (exist) {
-    const { id, name, phone, email } = contact
-    arr = contacts.map((item) => {
-      if (item.id === id) {
-        return {
-          id,
-          name,
-          phone,
-          email,
-        }
-      } else {
-        return item
-      }
-    })
-  } else {
-    arr = [...contacts, contact]
-  }
-  localStorage.setItem('contacts', JSON.stringify(arr))
-  return arr
+  database.ref('contacts/' + contact.id).set(contact);
+  return false;
 }

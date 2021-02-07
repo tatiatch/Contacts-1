@@ -10,12 +10,6 @@ class AddContact extends Component {
     email: '',
   }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   if (props.contact && props.contact.id !== state.id) {
-  //     return props.contact
-  //   }
-  // }
-
   hanldeChange = (event) => {
     const { name, value } = event.target
     this.setState({ [name]: value })
